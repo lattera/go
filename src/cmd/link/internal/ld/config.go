@@ -40,6 +40,7 @@ func (mode *BuildMode) Set(s string) error {
 		switch objabi.GOOS {
 		case "android", "linux":
 		case "darwin":
+		case "freebsd":
 			switch objabi.GOARCH {
 			case "amd64":
 			default:
@@ -72,6 +73,7 @@ func (mode *BuildMode) Set(s string) error {
 	case "shared":
 		switch objabi.GOOS {
 		case "linux":
+		case "freebsd":
 			switch objabi.GOARCH {
 			case "386", "amd64", "arm", "arm64", "ppc64le", "s390x":
 			default:
@@ -90,6 +92,7 @@ func (mode *BuildMode) Set(s string) error {
 				return badmode()
 			}
 		case "darwin":
+		case "freebsd":
 			switch objabi.GOARCH {
 			case "amd64":
 			default:
@@ -199,6 +202,7 @@ func mustLinkExternal(ctxt *Link) (res bool, reason string) {
 	case BuildModePIE:
 		switch objabi.GOOS + "/" + objabi.GOARCH {
 		case "linux/amd64":
+		case "freebsd/amd64":
 		default:
 			// Internal linking does not support TLS_IE.
 			return true, "buildmode=pie"
